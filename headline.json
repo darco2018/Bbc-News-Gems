@@ -1,0 +1,39 @@
+{
+  "description": "BBC headlines with filtered less common words",
+  "version": "1.0",
+  "filteredAgainstMostCommonEnglishWords": 5000,
+  "size": 3,
+  "data": [
+    {
+      "sequence": [
+        "Life",
+        "is",
+        "precarious"
+      ],
+      "filtered": [
+        2
+      ]
+    },
+    {
+      "sequence": [
+        "Oysters",
+        "are",
+        "great"
+      ],
+      "filtered": [
+        1
+      ]
+    },
+    {
+      "sequence": [
+        "Boys",
+        "splashed",
+        "mud"
+      ],
+      "filtered": [
+        1,
+        2
+      ]
+    }
+  ]
+}
