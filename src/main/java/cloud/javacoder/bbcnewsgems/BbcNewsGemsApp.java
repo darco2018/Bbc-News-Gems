@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class BbcNewsGemsApp {
 
-	@Value("${spring.message}") //  not working
+	//@Value("${spring.message}") //  not working
 	private String activeProfile;
 
 	public static void main(String[] args) {

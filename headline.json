@@ -1,9 +1,10 @@
 {
-  "description": "BBC headlines with filtered less common words",
+  "description": "BBC headlines with filtered words",
   "version": "1.0",
+  "maxNoOfHeadlines": 20,
   "wordsRankedStartIncl": 1,
   "wordsRankedEndIncl": 5000,
-  "size": 3,
+  "dataSize": 3,
   "data": [
     {
       "sequence": [

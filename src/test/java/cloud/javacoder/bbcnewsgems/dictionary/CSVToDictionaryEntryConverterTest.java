@@ -1,8 +1,5 @@
-package cloud.javacoder.changename;
+package cloud.javacoder.bbcnewsgems.dictionary;
 
-import cloud.javacoder.bbcnewsgems.dictionary.CSVToDictionaryEntryConverter;
-import cloud.javacoder.bbcnewsgems.dictionary.Dictionary;
-import cloud.javacoder.bbcnewsgems.dictionary.DictionaryEntry;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

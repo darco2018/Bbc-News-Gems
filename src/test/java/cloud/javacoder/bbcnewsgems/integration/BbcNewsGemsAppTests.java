@@ -1,10 +1,10 @@
-package cloud.javacoder.changename;
+package cloud.javacoder.bbcnewsgems.integration;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ChangenameApplicationTests {
+class BbcNewsGemsAppTests {
 
 	@Test
 	void contextLoads() {

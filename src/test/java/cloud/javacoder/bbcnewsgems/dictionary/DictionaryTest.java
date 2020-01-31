@@ -1,7 +1,5 @@
-package cloud.javacoder.changename;
+package cloud.javacoder.bbcnewsgems.dictionary;
 
-import cloud.javacoder.bbcnewsgems.dictionary.Dictionary;
-import cloud.javacoder.bbcnewsgems.dictionary.DictionaryEntry;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
