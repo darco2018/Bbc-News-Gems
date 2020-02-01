@@ -1,7 +1,8 @@
 {
   "description": "BBC headlines with filtered less common words",
   "version": "1.0",
-  "filteredAgainstMostCommonEnglishWords": 5000,
+  "wordsRankedStartIncl": 1,
+  "wordsRankedEndIncl": 5000,
   "size": 3,
   "data": [
     {
