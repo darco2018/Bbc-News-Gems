@@ -1,7 +1,6 @@
 {
   "description": "BBC headlines with filtered words",
   "version": "1.0",
-  "maxNoOfHeadlines": 20,
   "wordsRankedStartIncl": 1,
   "wordsRankedEndIncl": 5000,
   "dataSize": 3,

@@ -7,8 +7,12 @@ import java.util.ArrayList;
 
 @Data
 public class HeadlinesDTO {
-    private String version;
-    private ArrayList<FilteredHeadline> data;
+    private String description = "";
+    private String version = "";
+    private int wordsRankedStartIncl = 0;
+    private int wordsRankedEndIncl = 0;
+    private int dataSize = 0;
+    private ArrayList<FilteredHeadline> data = new ArrayList<>();
 
 
 }
