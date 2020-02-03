@@ -1,11 +1,13 @@
 package cloud.javacoder.bbcnewsgems.headlines;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,12 @@ public class HeadlinesControllerTest {
 
      @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private FetchingService fetchingService;
+
+    @MockBean
+    private FilteringService filteringService;
 
     @MockBean
     private ToHeadlinesDTOMapper toHeadlinesDTOMapper;
@@ -94,5 +102,32 @@ public class HeadlinesControllerTest {
                 .andExpect(jsonPath("$.data[?(@.sequence)]").isArray())
                 .andExpect(jsonPath("$.data[?(@.filtered)]").isArray())
                 .andDo(print());
+    }
+
+    @Test
+    public void whenOtherServicesAttached_getHeadlines_returnsOK() throws Exception {
+
+        // PROBLEM: those services dont have to be present in the controller
+        // what is only tested is the presence of those services and their methods
+
+
+        // both willReturn must contain either a Matcher or a concrete raw object
+        given(fetchingService.getBBCHeadlines())
+                .willReturn(new ArrayList<String>());
+
+        given(filteringService.filter(new ArrayList<String>()))
+                .willReturn(new ArrayList<FilteredHeadline>());
+
+        given(toHeadlinesDTOMapper.map(new ArrayList<FilteredHeadline>()))
+                .willReturn(new HeadlinesDTO());
+
+        mockMvc.perform(MockMvcRequestBuilders.get(HEADLINES_URL))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void checkIfControllerHasServices(){
+        HeadlinesController headlinesController = new HeadlinesController(fetchingService, filteringService, toHeadlinesDTOMapper );
+        Assertions.assertThat(headlinesController).hasNoNullFieldsOrProperties();
     }
 }

@@ -8,11 +8,16 @@ import java.util.ArrayList;
 @RestController
 public class HeadlinesController {
 
+    private final FetchingService fetchingService;
+    private final FilteringService filteringService;
     private final  ToHeadlinesDTOMapper toHeadlinesDTOMapper;
 
-    public HeadlinesController(ToHeadlinesDTOMapper toHeadlinesDTOMapper) {
+    public HeadlinesController(FetchingService fetchingService, FilteringService filteringService, ToHeadlinesDTOMapper toHeadlinesDTOMapper) {
+        this.fetchingService = fetchingService;
+        this.filteringService = filteringService;
         this.toHeadlinesDTOMapper = toHeadlinesDTOMapper;
     }
+
 
     @GetMapping("/headlines")
     public HeadlinesDTO getFilteredHeadlines(){
