@@ -23,7 +23,7 @@ public class HeadlinesControllerIntegrationTest {
         ResponseEntity<HeadlinesDTO> response = restTemplate.getForEntity(HEADLINES_URL, HeadlinesDTO.class);
 
         Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        Assertions.assertThat(response.getBody().getVersion()).isEqualTo("1.0.0");
+        Assertions.assertThat(response.getBody().getVersion()).isEqualTo("1.0.0"); // NLP exception
         Assertions.assertThat(response.getBody().getData()).size().isGreaterThan(0);
     }
 

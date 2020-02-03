@@ -14,14 +14,20 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 
 @SpringBootTest
-class BbcNewsGemsAppTests {
+@AutoConfigureMockMvc // doesn't start the server but instatntiates the whole context (@WebMvcTest will only instantiate the web layer)
+class HeadlinesControllerSanityTest {
 
-
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
-    void contextLoads() {
+    public void sanityCheck() throws Exception {
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/headlines"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("")); // returning null, results in "" in json
+        //.andExpect(MockMvcResultMatchers.content(). .string(containsString("BBC")));
     }
-
-
 
 }

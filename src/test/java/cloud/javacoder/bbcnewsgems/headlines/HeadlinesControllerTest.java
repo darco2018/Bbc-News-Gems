@@ -1,19 +1,19 @@
 package cloud.javacoder.bbcnewsgems.headlines;
 
+import java.util.ArrayList;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.BDDMockito.given;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,7 +23,7 @@ public class HeadlinesControllerTest {
 
     private static String HEADLINES_URL = "/headlines";
 
-     @Autowired
+    @Autowired
     private MockMvc mockMvc;
 
     @MockBean
@@ -37,7 +37,7 @@ public class HeadlinesControllerTest {
 
     @Test
     public void getHeadlines_ReturnsOK() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(HEADLINES_URL))
+        mockMvc.perform(MockMvcRequestBuilders.get(HEADLINES_URL).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
@@ -47,7 +47,7 @@ public class HeadlinesControllerTest {
         given(toHeadlinesDTOMapper.map(new ArrayList<FilteredHeadline>()))
                 .willReturn(new HeadlinesDTO());
 
-        mockMvc.perform(MockMvcRequestBuilders.get(HEADLINES_URL))
+        mockMvc.perform(MockMvcRequestBuilders.get(HEADLINES_URL).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("description").isString())
                 .andExpect(jsonPath("version").isString())
                 .andExpect(jsonPath("wordsRankedStartIncl").isNumber())
@@ -57,7 +57,7 @@ public class HeadlinesControllerTest {
     }
 
     @Test
-    public void getHeadlines_returnsCorrectJSONValuesForAllPathsExceptDataPath() throws Exception {
+    public void getHeadlines_returnsCorrectJSONValuesForAllPathsExcludingDataPath() throws Exception {
 
         HeadlinesDTO headlinesDTO = new HeadlinesDTO();
         headlinesDTO.setDescription("BBC headlines filtered against a range of ranked most common English words");
@@ -69,7 +69,7 @@ public class HeadlinesControllerTest {
         given(toHeadlinesDTOMapper.map(new ArrayList<FilteredHeadline>()))
                 .willReturn(headlinesDTO);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(HEADLINES_URL))
+        mockMvc.perform(MockMvcRequestBuilders.get(HEADLINES_URL).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("description")
                         .value("BBC headlines filtered against a range of ranked most common English words"))
                 .andExpect(jsonPath("version").value("1.0.0"))
@@ -80,11 +80,12 @@ public class HeadlinesControllerTest {
     }
 
     @Test
-    public void getHeadlines_returnsCorrectValuesForDataPath() throws Exception {
+    public void getHeadlines_returnsCorrectNestedPathsOfDataPath() throws Exception {
 
         FilteredHeadline filteredHeadline = new FilteredHeadline();
         ArrayList<FilteredHeadline> list = new ArrayList<FilteredHeadline>();
-        list.add(filteredHeadline);
+        list.add(filteredHeadline); // [0] index
+
         HeadlinesDTO headlinesDTO = new HeadlinesDTO();
         headlinesDTO.setData(list);
 
@@ -93,23 +94,22 @@ public class HeadlinesControllerTest {
         given(toHeadlinesDTOMapper.map(anyList())) // !!!!
                 .willReturn(headlinesDTO);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(HEADLINES_URL))
+        mockMvc.perform(MockMvcRequestBuilders.get(HEADLINES_URL).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("data").exists())
-        // a non-null value, possibly an empty array or map, exists
+                // a non-null value, possibly an empty array or map, exists
                 .andExpect(jsonPath("$.data[?(@.sequence)]").hasJsonPath())
+                .andExpect(jsonPath("$.data[?(@.sequence)]").isArray())
                 .andExpect(jsonPath("$.data[?(@.filtered)]").hasJsonPath()) // at any index
                 .andExpect(jsonPath("$.data[0].filtered").hasJsonPath()) // at [0] index
-                .andExpect(jsonPath("$.data[?(@.sequence)]").isArray())
                 .andExpect(jsonPath("$.data[?(@.filtered)]").isArray())
                 .andDo(print());
     }
 
     @Test
-    public void whenOtherServicesAttached_getHeadlines_returnsOK() throws Exception {
+    public void whenOtherServicesPlugged_getHeadlines_returnsOK() throws Exception {
 
         // PROBLEM: those services dont have to be present in the controller
-        // what is only tested is the presence of those services and their methods
-
+        // what is only tested is the presence of those services in tha app and their methods
 
         // both willReturn must contain either a Matcher or a concrete raw object
         given(fetchingService.getBBCHeadlines())
@@ -126,8 +126,9 @@ public class HeadlinesControllerTest {
     }
 
     @Test
-    public void checkIfControllerHasServices(){
-        HeadlinesController headlinesController = new HeadlinesController(fetchingService, filteringService, toHeadlinesDTOMapper );
+    public void checkIfControllerHasServices() {
+        // doesnt check if dependencies are injected & matched with fields
+        HeadlinesController headlinesController = new HeadlinesController(fetchingService, filteringService, toHeadlinesDTOMapper);
         Assertions.assertThat(headlinesController).hasNoNullFieldsOrProperties();
     }
 }
