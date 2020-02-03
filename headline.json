@@ -1,7 +1,7 @@
 {
-  "description": "BBC headlines with filtered words",
+  "description": "BBC headlines filtered against a range of ranked most common English words",
   "version": "1.0",
-  "wordsRankedStartIncl": 1,
+  "wordsRankedStartIncl": 4000,
   "wordsRankedEndIncl": 5000,
   "dataSize": 3,
   "data": [
