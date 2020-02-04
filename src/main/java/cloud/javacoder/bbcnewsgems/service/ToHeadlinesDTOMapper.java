@@ -1,5 +1,7 @@
-package cloud.javacoder.bbcnewsgems.headlines;
+package cloud.javacoder.bbcnewsgems.service;
 
+import cloud.javacoder.bbcnewsgems.headlines.FilteredHeadline;
+import cloud.javacoder.bbcnewsgems.headlines.HeadlinesDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

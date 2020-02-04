@@ -2,9 +2,13 @@ package cloud.javacoder.bbcnewsgems.headlines;
 
 import java.util.ArrayList;
 
+import cloud.javacoder.bbcnewsgems.service.FetchingService;
+import cloud.javacoder.bbcnewsgems.service.FilteringService;
+import cloud.javacoder.bbcnewsgems.service.ToHeadlinesDTOMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,8 +116,8 @@ public class HeadlinesControllerTest {
         // what is only tested is the presence of those services in tha app and their methods
 
         // both willReturn must contain either a Matcher or a concrete raw object
-        given(fetchingService.getBBCHeadlines())
-                .willReturn(new ArrayList<String>());
+        given(fetchingService.getHtml(anyString()))
+                .willReturn(anyString());
 
         given(filteringService.filter(new ArrayList<String>()))
                 .willReturn(new ArrayList<FilteredHeadline>());

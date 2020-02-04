@@ -1,5 +1,8 @@
 package cloud.javacoder.bbcnewsgems.headlines;
 
+import cloud.javacoder.bbcnewsgems.service.FetchingService;
+import cloud.javacoder.bbcnewsgems.service.FilteringService;
+import cloud.javacoder.bbcnewsgems.service.ToHeadlinesDTOMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +13,7 @@ public class HeadlinesController {
 
     private final FetchingService fetchingService;
     private final FilteringService filteringService;
-    private final  ToHeadlinesDTOMapper toHeadlinesDTOMapper;
+    private final ToHeadlinesDTOMapper toHeadlinesDTOMapper;
 
     public HeadlinesController(FetchingService fetchingService, FilteringService filteringService, ToHeadlinesDTOMapper toHeadlinesDTOMapper) {
         this.fetchingService = fetchingService;
