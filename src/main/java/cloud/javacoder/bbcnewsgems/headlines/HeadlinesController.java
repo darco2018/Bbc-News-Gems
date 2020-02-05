@@ -1,8 +1,8 @@
 package cloud.javacoder.bbcnewsgems.headlines;
 
-import cloud.javacoder.bbcnewsgems.service.FetchingService;
-import cloud.javacoder.bbcnewsgems.service.FilteringService;
-import cloud.javacoder.bbcnewsgems.service.ToHeadlinesDTOMapper;
+import cloud.javacoder.bbcnewsgems.service.fetching.FetchingService;
+import cloud.javacoder.bbcnewsgems.service.filtering.FilteringService;
+import cloud.javacoder.bbcnewsgems.service.mapping.ToHeadlinesDTOMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

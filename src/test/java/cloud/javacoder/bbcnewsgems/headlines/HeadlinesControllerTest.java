@@ -2,9 +2,9 @@ package cloud.javacoder.bbcnewsgems.headlines;
 
 import java.util.ArrayList;
 
-import cloud.javacoder.bbcnewsgems.service.FetchingService;
-import cloud.javacoder.bbcnewsgems.service.FilteringService;
-import cloud.javacoder.bbcnewsgems.service.ToHeadlinesDTOMapper;
+import cloud.javacoder.bbcnewsgems.service.fetching.FetchingService;
+import cloud.javacoder.bbcnewsgems.service.filtering.FilteringService;
+import cloud.javacoder.bbcnewsgems.service.mapping.ToHeadlinesDTOMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.anyList;

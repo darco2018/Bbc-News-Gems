@@ -1,4 +1,4 @@
-package cloud.javacoder.bbcnewsgems.service;
+package cloud.javacoder.bbcnewsgems.service.mapping;
 
 import cloud.javacoder.bbcnewsgems.headlines.FilteredHeadline;
 import cloud.javacoder.bbcnewsgems.headlines.HeadlinesDTO;

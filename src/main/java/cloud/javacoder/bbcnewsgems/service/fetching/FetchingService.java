@@ -1,4 +1,4 @@
-package cloud.javacoder.bbcnewsgems.service;
+package cloud.javacoder.bbcnewsgems.service.fetching;
 
 import org.springframework.stereotype.Service;
 
@@ -8,5 +8,4 @@ import java.util.List;
 public interface FetchingService {
 
     String getHtml(String url);
-    List<String> getHeadlines(String attribute);
 }
