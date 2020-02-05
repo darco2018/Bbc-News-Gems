@@ -1,10 +1,14 @@
 package cloud.javacoder.bbcnewsgems.service;
 
+
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 // IMPORTANT: You must specify the implementation classes of the interface you use below:
 @SpringBootTest(classes = {FetchingServiceImpl.class, HTMLParserImpl.class})
@@ -27,6 +31,16 @@ public class FetchingServiceIntegrationTest {
                 .containsIgnoringCase("<body>")
                 .containsIgnoringCase("bbc")
                 .hasSizeGreaterThan(500);
+    }
+
+    @Disabled
+    @Test
+    public void getHeadlines(){
+        List<String> headlines = fetchingService.getHeadlines(BBC_URL);
+
+        Assertions.assertThat(headlines)
+                .isNotNull()
+                .size().isGreaterThan(0);
     }
 
 }
