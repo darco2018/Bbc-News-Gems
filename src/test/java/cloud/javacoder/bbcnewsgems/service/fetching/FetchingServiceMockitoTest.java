@@ -7,13 +7,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 // bez sensu. ten sam output co Unit test. nic nie jest mockowane tak na prawde. test wchodzi w implementacje metody
 // .getHtml()
 
 @ExtendWith(MockitoExtension.class)
 public class FetchingServiceMockitoTest {
 
-    private static String BBC_URL = "https://www.bbc.com/";
+    private final String BBC = "https://www.bbc.com/";
 
     @InjectMocks
     private FetchingService fetchingService = new FetchingServiceImpl();
@@ -21,18 +24,18 @@ public class FetchingServiceMockitoTest {
     // The next test produces only 4 lines of output from DEBUG org.springframework.web.client.RestTemplate
     @DisplayName("Fetches BBC homepage")
     @Test
-    public void givenBbcUrl_fetchesHtml() {
+    public void givenBbcUrl_fetchesHtml() throws Exception {
 
-        String html = fetchingService.getHtml(BBC_URL);
+        String html = fetchingService.getHtml(new URL(BBC).toURI());
 
         Assertions.assertThat(html)
                 .isNotNull()
                 .isNotBlank()
                 .isNotEmpty()
                 .hasSizeGreaterThan(500)
-                .containsIgnoringCase("<title>")
-                .containsIgnoringCase("<body>")
-                .containsIgnoringCase("bbc");
+                .containsIgnoringCase("<!DOCTYPE html>")
+                .containsIgnoringCase("bbc")
+                .contains("<title>", "<body>");
     }
 }
 

@@ -6,11 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 // starts Spring context: you can see Spring logo
 @SpringBootTest(classes = {FetchingServiceImpl.class})
 public class FetchingServiceIntegrationTest {
 
-    private static String BBC_URL = "https://www.bbc.com/";
+    private final String BBC = "https://www.bbc.com/";
 
     @Autowired // @Autowired works only with @SpringBootTest;
     // limit classes involved by (classes = {FetchingServiceImpl.class}) turns off db, jpa, web, ...
@@ -18,16 +21,16 @@ public class FetchingServiceIntegrationTest {
 
     @DisplayName("Fetches BBC homepage")
     @Test
-    public void givenBbcUrl_returnsBbcWebpage() {
-        String html = fetchingService.getHtml(BBC_URL);
+    public void givenBbcUrl_returnsBbcWebpage() throws Exception {
+        String html = fetchingService.getHtml(new URL(BBC).toURI());
 
         Assertions.assertThat(html)
                 .isNotNull()
                 .isNotBlank()
                 .isNotEmpty()
                 .hasSizeGreaterThan(500)
-                .containsIgnoringCase("<title>")
-                .containsIgnoringCase("<body>")
-                .containsIgnoringCase("bbc");
+                .containsIgnoringCase("<!DOCTYPE html>")
+                .containsIgnoringCase("bbc")
+                .contains("<title>", "<body>");
     }
 }

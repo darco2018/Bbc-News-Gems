@@ -1,5 +1,6 @@
 package cloud.javacoder.bbcnewsgems.headlines;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 import cloud.javacoder.bbcnewsgems.service.fetching.FetchingService;
@@ -116,8 +117,7 @@ public class HeadlinesControllerTest {
         // what is only tested is the presence of those services in tha app and their methods
 
         // both willReturn must contain either a Matcher or a concrete raw object
-        given(fetchingService.getHtml(anyString()))
-                .willReturn(anyString());
+        given(fetchingService.getHtml( new URI(anyString()))).willReturn(anyString());
 
         given(filteringService.filter(new ArrayList<String>(), anyInt(), anyInt()) )
                 .willReturn(new ArrayList<FilteredHeadline>());

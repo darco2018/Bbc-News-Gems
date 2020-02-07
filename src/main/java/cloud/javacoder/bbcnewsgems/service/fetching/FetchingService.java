@@ -2,10 +2,10 @@ package cloud.javacoder.bbcnewsgems.service.fetching;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.net.URI;
 
 @Service
 public interface FetchingService {
 
-    String getHtml(String url);
+    String getHtml(URI url);
 }

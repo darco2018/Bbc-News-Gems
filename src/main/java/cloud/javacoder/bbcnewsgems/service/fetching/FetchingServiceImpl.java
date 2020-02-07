@@ -5,6 +5,8 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+
 @Slf4j
 @Service
 public class FetchingServiceImpl implements FetchingService {
@@ -12,7 +14,7 @@ public class FetchingServiceImpl implements FetchingService {
     private RestTemplate restTemplate = new RestTemplateBuilder().build();
 
     @Override
-    public String getHtml(String url) {
+    public String getHtml(URI url) {
         log.info("Starting fetching from " + url);
 
         try {
