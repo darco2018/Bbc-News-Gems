@@ -7,8 +7,8 @@ import cloud.javacoder.bbcnewsgems.service.filtering.FilteringService;
 import cloud.javacoder.bbcnewsgems.service.mapping.ToHeadlinesDTOMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyString;
+
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +119,7 @@ public class HeadlinesControllerTest {
         given(fetchingService.getHtml(anyString()))
                 .willReturn(anyString());
 
-        given(filteringService.filter(new ArrayList<String>()))
+        given(filteringService.filter(new ArrayList<String>(), anyInt(), anyInt()) )
                 .willReturn(new ArrayList<FilteredHeadline>());
 
         given(toHeadlinesDTOMapper.map(new ArrayList<FilteredHeadline>()))

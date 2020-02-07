@@ -1,16 +1,10 @@
 package cloud.javacoder.bbcnewsgems.service.filtering;
 
 import cloud.javacoder.bbcnewsgems.headlines.FilteredHeadline;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class FilteringService {
-    public List<FilteredHeadline> filter(ArrayList<String> headlines) {
-        return null;
-    }
+public interface FilteringService {
+
+    List<FilteredHeadline> filter(List<String> headlines, int dictionaryStart, int dictionaryEnd);
 }
-
-
