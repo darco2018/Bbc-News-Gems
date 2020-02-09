@@ -1,13 +1,13 @@
 package cloud.javacoder.bbcnewsgems.service.filtering;
 
 import cloud.javacoder.bbcnewsgems.dictionary.Dictionary;
-import cloud.javacoder.bbcnewsgems.dictionary.DictionaryEntry;
 import cloud.javacoder.bbcnewsgems.headlines.FilteredHeadline;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class FilteringServiceImpl implements FilteringService {
 
     private final Dictionary dictionary;
@@ -17,17 +17,17 @@ public class FilteringServiceImpl implements FilteringService {
     }
 
     @Override
-    public List<FilteredHeadline> filter(List<String> headlines, int dictionaryStart, int dictionaryEnd) {
+    public List<FilteredHeadline> filter(List<String> headlines, int rangeStart, int rangeEnd) {
 
         List<FilteredHeadline> list = new ArrayList<>();
 
-        for(String headline : headlines){
-            String [] words = headline.split(" ");
+        for (String headline : headlines) {
+            String[] words = headline.split(" ");
             int[] rareWords = getFilteredWords(words);
 
             FilteredHeadline filteredHeadline = new FilteredHeadline();
-            filteredHeadline.setSequence(words);
-            filteredHeadline.setFiltered(rareWords);
+            filteredHeadline.setWords(words);
+            filteredHeadline.getOutOfRangeWords();
 
             list.add(filteredHeadline);
         }
@@ -39,12 +39,12 @@ public class FilteringServiceImpl implements FilteringService {
         List<Integer> indexesOfFilteredWords = new ArrayList<>();
 
 
-        for(int i = 0; i < words.length; i ++){
-            if(dictionary.getEntries().contains(words[i])){
+        for (int i = 0; i < words.length; i++) {
+            if (dictionary.containsWord(words[i]) >= 0) {
                 indexesOfFilteredWords.add(i);
             }
         }
 
-        return indexesOfFilteredWords.stream().mapToInt(i->i).toArray();
+        return indexesOfFilteredWords.stream().mapToInt(i -> i).toArray();
     }
 }
