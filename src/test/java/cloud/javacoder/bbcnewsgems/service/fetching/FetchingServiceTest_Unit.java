@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.net.URL;
 
-public class FetchingServiceUnitTest {
+public class FetchingServiceTest_Unit {
 
     private final String BBC = "https://www.bbc.com/";
     private FetchingService fetchingService = new FetchingServiceImpl();
@@ -29,7 +29,6 @@ public class FetchingServiceUnitTest {
     }
 
     // how to do when resttemplate throws exception ?!
-    @DisplayName("when fetching from BBC unsuccessful returns empty string ")
     @Test
     public void givenWrongUrl_returnsEmptyString() throws Exception {
         String html = fetchingService.getHtml(new URL("http://nonexistenturlXYZ.com").toURI());
