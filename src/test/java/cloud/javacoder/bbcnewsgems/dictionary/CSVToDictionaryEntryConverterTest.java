@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.IOException;
 import java.util.List;
 
-@SpringBootTest(classes = {Dictionary.class, DictionaryEntry.class, CSVToDictionaryEntryConverter.class})
+@SpringBootTest(classes = {Dictionary.class, DictionaryEntry.class, CSVToDictionaryLoader.class})
 public class CSVToDictionaryEntryConverterTest {
 
     private static String pathToFile = "dictionary5000.csv";
@@ -15,8 +15,8 @@ public class CSVToDictionaryEntryConverterTest {
     @Test
     public void whenRedingCSVFile_fillsDictionaryWithEntries() throws IOException {
         Dictionary dictionary = new Dictionary();
-        List<DictionaryEntry> entries = dictionary.getEntries();
-        CSVToDictionaryEntryConverter converter = new CSVToDictionaryEntryConverter(dictionary);
+        List<DictionaryEntry> entries = dictionary.getDictionaryByRank();
+        CSVToDictionaryLoader converter = new CSVToDictionaryLoader(dictionary);
         converter.parse(pathToFile);
 
         Assertions.assertThat(entries.size()).isEqualTo(5000);

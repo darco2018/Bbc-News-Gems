@@ -8,11 +8,11 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 @Slf4j
-public class CSVToDictionaryEntryConverter {
+public class CSVToDictionaryLoader {
 
     private Dictionary dictionary;
 
-    public CSVToDictionaryEntryConverter(Dictionary dictionary) {
+    public CSVToDictionaryLoader(Dictionary dictionary) {
         this.dictionary = dictionary;
     }
 

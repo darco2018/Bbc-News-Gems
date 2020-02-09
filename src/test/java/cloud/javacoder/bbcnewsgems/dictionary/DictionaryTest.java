@@ -27,7 +27,7 @@ public class DictionaryTest {
         log.info("About to add an entry: ");
         dictionary.addEntry(entry_1);
 
-        Assertions.assertThat(dictionary.getEntries().size()).isEqualTo(1);
+        Assertions.assertThat(dictionary.getDictionaryByRank().size()).isEqualTo(1);
     }
 
     @Test
