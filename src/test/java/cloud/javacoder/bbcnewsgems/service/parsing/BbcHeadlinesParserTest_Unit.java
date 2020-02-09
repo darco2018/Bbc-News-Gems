@@ -5,36 +5,37 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class BbcHeadlinesParserUnitTest {
+public class BbcHeadlinesParserTest_Unit {
+
+    private static final String BBC_HOMEPAGE_FILE = "bbc.html";
+    private static String BBC_HTML;
 
     private final HTMLParser htmlParser = new BbcHeadlinesParser();
-    private static final String BBC_HOMEPAGE_FILE = "bbc.html";
-    private static String bbcHomepageStr;
 
-    @BeforeAll //  MUST be a static method
-    private static void loadBbcHtmlFromFile() throws IOException {
+    @BeforeAll
+    private static void getBbcHtmlFromFile() throws Exception {
         byte[] htmlBytes = Files.readAllBytes(Paths.get(BBC_HOMEPAGE_FILE));
-        bbcHomepageStr = new String(htmlBytes);
+        BBC_HTML = new String(htmlBytes);
     }
+
     @DisplayName("Parses BBC homepage into headlines")
     @Test
     void givenBbcHtmlAsString_parsesHeadlines() {
 
-        List<String> headlines = this.htmlParser.parse(bbcHomepageStr);
+        List<String> headlines = this.htmlParser.parse(BBC_HTML);
 
         Assertions.assertThat(headlines)
                 .isNotNull()
                 .doesNotContainNull()
+                .isInstanceOfAny(List.class)
                 .hasSize(67)
                 .asString().contains("Coronavirus: Airline asks staff");
     }
 
-    @DisplayName("when cannot parse, returns empty list")
     @Test
     void givenUnparsableContent_returnsEmptyList() {
 
@@ -42,6 +43,7 @@ public class BbcHeadlinesParserUnitTest {
 
         Assertions.assertThat(headlines)
                 .isNotNull()
+                .isInstanceOfAny(List.class)
                 .hasSize(0);
     }
 }

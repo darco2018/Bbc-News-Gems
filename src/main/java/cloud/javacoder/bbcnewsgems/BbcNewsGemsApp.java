@@ -1,15 +1,23 @@
 package cloud.javacoder.bbcnewsgems;
 
+import cloud.javacoder.bbcnewsgems.service.fetching.FetchingService;
+import cloud.javacoder.bbcnewsgems.service.fetching.FetchingServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class BbcNewsGemsApp {
 
 	//@Value("${spring.message}") //  not working
 	private String activeProfile;
+
+	/*@Bean
+	public FetchingService getFetchingService(){
+		return new FetchingServiceImpl();
+	}*/
 
 	public static void main(String[] args) {
 
