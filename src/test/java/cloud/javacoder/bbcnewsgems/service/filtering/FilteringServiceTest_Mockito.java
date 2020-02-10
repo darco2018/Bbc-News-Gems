@@ -12,57 +12,95 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.BDDMockito.given;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 public class FilteringServiceTest_Mockito {
 
-    List<String> headlines;
+    private List<String> headlines;
     @Mock
     private Dictionary dictionary;
     private FilteringService filteringService;
-    private String lastWord = "ccc";
-    private String wordInDictRange_2 = "eee";
 
     @BeforeEach
     public void init() {
-        filteringService = new FilteringServiceImpl(dictionary);
+        filteringService = new FilteringServiceImpl(this.dictionary);
+        this.headlines = new ArrayList<String>();
+        this.headlines.add("aaa bbb ccc");
+        this.headlines.add("ddd eee fff ggg");
+        this.headlines.add("hhh");
 
-        headlines = new ArrayList<String>();
-
-        String headline_1 = "aaa bbb " + lastWord;
-        headlines.add(headline_1);
-
-        String headline_2 = "ddd " + wordInDictRange_2 + " fff";
-        headlines.add(headline_2);
+        int notInRange = -1;
+        doReturn(1, 100, notInRange, 99, notInRange, notInRange, 4, 1000)
+                .when(this.dictionary).containsWord(anyString());
     }
 
     @Test
-    public void givenWordInRange_ReturnsCorrectIndexOfThisWord() {
+    public void givenHeadlines_returnsSameNoOfHeadlines() {
 
-        given(this.dictionary.containsWord(lastWord)).willReturn(-1); // word out of filtered range
+        List<FilteredHeadline> outputHeadlines = this.filteringService.filter(this.headlines, 1, 5000);
+
+        Assertions.assertThat(outputHeadlines.size()).isEqualTo(this.headlines.size());
+    }
+
+    @Test
+    public void givenHeadlines_returnsEachHeadlineAsArrayOfWords() {
+
+        List<FilteredHeadline> outputHeadlines = this.filteringService.filter(this.headlines, 1, 5000);
+
+        // assert
+        String[] wordsOfHeadline_1 = outputHeadlines.get(0).getWords();
+        String[] wordsOfHeadline_2 = outputHeadlines.get(1).getWords();
+
+        Assertions.assertThat(wordsOfHeadline_1.length).isEqualTo(this.headlines.get(0).split(" ").length);
+        Assertions.assertThat(wordsOfHeadline_1).containsExactly("aaa", "bbb", "ccc");
+
+        Assertions.assertThat(wordsOfHeadline_2.length).isEqualTo(this.headlines.get(1).split(" ").length); // ex 5
+        Assertions.assertThat(wordsOfHeadline_2).containsExactly("ddd", "eee", "fff", "ggg");
+    }
+
+    @Test
+    public void givenRangeLimits_whenWordsOutOfRangePresentInHeadlines_findsTheirIndexes() {
+
+        //given(this.dictionary.containsWord("ccc")).willReturn(-1); // word out of filtered range
         //given(this.dictionary.containsWord(anyString())).willReturn(-1); // ok
 
         // NOT ok : you cannot use anyObject(), eq() methods outside of verified/stubbed method:
         //given(this.dictionary.containsWord(anyString())).willReturn(AdditionalMatchers.lt(0));
 
-        int noOfInputHeadlines = this.headlines.size();
+        // given(yourMock.yourMethod()).willReturn(1, 2, 3);
+        //given(this.dictionary.containsWord("ccc")).willReturn(1,100, -1);
 
-        List<FilteredHeadline> filteredHeadlines = filteringService.filter(headlines, 1, 5000);
-        FilteredHeadline headline_1 = filteredHeadlines.get(0);
+        // act
+        List<FilteredHeadline> outputHeadlines = filteringService.filter(headlines, 1, 5000);
 
-        Assertions.assertThat(filteredHeadlines.size()).isEqualTo(noOfInputHeadlines);
-
-        String[] words = headline_1.getWords();
+        // assert 1st headline
+        FilteredHeadline headline_1 = outputHeadlines.get(0);
         int[] outOfRange = headline_1.getOutOfRangeWords();
 
-        Assertions.assertThat(words.length).isEqualTo(this.headlines.get(0).split(" ").length);
-        Assertions.assertThat(words[2]).isEqualTo(lastWord);
+        Assertions.assertThat(outOfRange.length).isEqualTo(1);
+        Assertions.assertThat(outOfRange[0]).isEqualTo(2);
 
-        Assertions.assertThat(outOfRange.length).isEqualTo(1); // actual: 0
-        Assertions.assertThat(outOfRange[0]).isEqualTo(2); // lastWord // ArrayIndexOutOfBoundsException: 0
+        // assert 2nd headline
+        FilteredHeadline headline_2 = outputHeadlines.get(1);
+        int[] outOfRange_2 = headline_2.getOutOfRangeWords();
 
+        Assertions.assertThat(outOfRange_2.length).isEqualTo(2);
+        Assertions.assertThat(outOfRange_2[0]).isEqualTo(1);
+        Assertions.assertThat(outOfRange_2[1]).isEqualTo(2);
     }
 
+    @Test
+    public void givenRangeLimits_whenNoWordsOutOfRangePresentInHeadline_returnsEmptyArray() {
 
+        // act
+        List<FilteredHeadline> outputHeadlines = filteringService.filter(headlines, 1, 5000);
+
+        FilteredHeadline headline_3 = outputHeadlines.get(2);
+        int[] outOfRange_3 = headline_3.getOutOfRangeWords();
+
+        Assertions.assertThat(outOfRange_3.length).isEqualTo(0);
+
+    }
 }

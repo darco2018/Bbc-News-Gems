@@ -13,6 +13,7 @@ public class DictionaryTest {
     private static DictionaryEntry entry_1 = new DictionaryEntry();
     private Dictionary dictionary = new Dictionary();
 
+
     @BeforeAll
     private static void createEntry() {
         entry_1.setRank(1);
