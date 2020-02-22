@@ -7,12 +7,10 @@ import cloud.javacoder.bbcnewsgems.headlines.FilteredHeadline;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import java.io.IOException;
 import java.util.*;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 
 
@@ -26,7 +24,7 @@ public class FilteringServiceTest_Integr {
 
     @BeforeEach
     public void init() throws IOException {
-        loader.parse(pathToFile);
+        loader.load(pathToFile);
         int size1 = dictionary.getDictionaryByRank().size();
         int size2 = dictionary.getDictionaryByWord().size();
         List<DictionaryEntry> repetedMap = dictionary.getRepeated();

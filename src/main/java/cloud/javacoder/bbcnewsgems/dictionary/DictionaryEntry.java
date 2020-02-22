@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Objects;
 
 /*
-* Maps dictionary data from csv file
+*  Represents word data
 */
 @Data
 public class DictionaryEntry {
