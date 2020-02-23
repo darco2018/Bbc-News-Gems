@@ -26,43 +26,22 @@ public class CSVParserTest {
         Assertions.assertThat(entries.size()).isEqualTo(5000);
     }
 
-/*
-    private CSVToDictionaryLoader loader;
-    private String csvFile = "dictionary5000.csv";
-    private DictionaryPrevious dict;
-
-    @BeforeEach
-    public void setUp() {
-        dict = new DictionaryPrevious();
-        loader = new CSVToDictionaryLoader(dict);
-    }
-
-    @Test
-    public void loads5000entries() throws IOException {
-        // act
-        loader.load(csvFile);
-
-        // assert
-        Assertions.assertThat(dict.getDictionaryByRank().size()).isEqualTo(5000);
-    }
-
     @Test
     public void loads4352entries() throws IOException {
+        //arrange
+        List<DictionaryEntry> entries = CSVParser.parse(csvFile);
+
         // act
-        loader.loadIntoMap(csvFile);
+        Dictionary dictionary = Dictionary.from(entries);
 
         // assert
-        Map<String, List<DictionaryEntry>> realDict = dict.getRealDictionary();
-
-        Assertions.assertThat(realDict.size()).isEqualTo(4352); // no duplicates;
-        System.out.println("Size is " + dict.getRealDictionary().size());
-
-        //
+        Map<String, List<DictionaryEntry>> wordsByName = dictionary.getWordsByName();
+        Assertions.assertThat(wordsByName.size()).isEqualTo(4352);
 
         int wordsWithMultipleEntries = 0;
         int wordsWithSingleEntry = 0;
-        for (String word : realDict.keySet()) {
-            if (realDict.get(word).size() > 1) {
+        for (String word : wordsByName.keySet()) {
+            if (wordsByName.get(word).size() > 1) {
                 wordsWithMultipleEntries++;
             } else {
                 wordsWithSingleEntry++;
@@ -71,5 +50,7 @@ public class CSVParserTest {
         // assert
         Assertions.assertThat(wordsWithMultipleEntries).isEqualTo(604);
         Assertions.assertThat(wordsWithSingleEntry).isEqualTo(4352 - 604);
-    }*/
+    }
+
+
 }

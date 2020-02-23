@@ -8,7 +8,7 @@ public class DictMain {
     public static void main(String[] args) {
 
         List<DictionaryEntry> entries = CSVParser.parse("dictionary5000.csv");
-        //Dictionary dictionary = Dictionary.from(entries);
+        Dictionary dictionary = Dictionary.from(entries);
 
         /*Dictionary dictionary = new Dictionary();
         CSVToDictionaryLoader loader = new CSVToDictionaryLoader(dictionary);
