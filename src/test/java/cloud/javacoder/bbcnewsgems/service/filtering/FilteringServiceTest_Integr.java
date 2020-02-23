@@ -1,7 +1,7 @@
 package cloud.javacoder.bbcnewsgems.service.filtering;
 
 import cloud.javacoder.bbcnewsgems.dictionary.CSVToDictionaryLoader;
-import cloud.javacoder.bbcnewsgems.dictionary.Dictionary;
+import cloud.javacoder.bbcnewsgems.dictionary.DictionaryPrevious;
 import cloud.javacoder.bbcnewsgems.dictionary.DictionaryEntry;
 import cloud.javacoder.bbcnewsgems.headlines.FilteredHeadline;
 import org.assertj.core.api.Assertions;
@@ -17,17 +17,17 @@ import static org.mockito.Mockito.doReturn;
 public class FilteringServiceTest_Integr {
 
     private List<String> headlines;
-    private Dictionary dictionary = new Dictionary();
-    private CSVToDictionaryLoader loader = new CSVToDictionaryLoader(dictionary);
+    private DictionaryPrevious dictionaryPrevious = new DictionaryPrevious();
+    private CSVToDictionaryLoader loader = new CSVToDictionaryLoader(dictionaryPrevious);
     private static String pathToFile = "dictionary5000.csv";
     private FilteringService filteringService;
 
     @BeforeEach
     public void init() throws IOException {
         loader.load(pathToFile);
-        int size1 = dictionary.getDictionaryByRank().size();
-        int size2 = dictionary.getDictionaryByWord().size();
-        List<DictionaryEntry> repetedMap = dictionary.getRepeated();
+        int size1 = dictionaryPrevious.getDictionaryByRank().size();
+        int size2 = dictionaryPrevious.getDictionaryByWord().size();
+        List<DictionaryEntry> repetedMap = dictionaryPrevious.getRepeated();
         Collections.sort(repetedMap, (x, y) -> (x.getWord()).compareToIgnoreCase(y.getWord()) );
         repetedMap.forEach(System.out::println);
         //int intsizeOFRepeted = .size();
@@ -35,7 +35,7 @@ public class FilteringServiceTest_Integr {
 
 
 
-        filteringService = new FilteringServiceImpl(this.dictionary);
+        filteringService = new FilteringServiceImpl(this.dictionaryPrevious);
         this.headlines = new ArrayList<String>();
         String headlineWith_1_WordOutOfDictionary = "I am agastopia";
         String headlineWith_2_WordsOutOfDictionary = "Halfpace is better than jentacular";

@@ -13,10 +13,10 @@ import java.util.stream.Stream;
 @Slf4j
 public class CSVToDictionaryLoader {
 
-    private Dictionary dictionary;
+    private DictionaryPrevious dictionaryPrevious;
 
-    public CSVToDictionaryLoader(Dictionary dictionary) {
-        this.dictionary = dictionary;
+    public CSVToDictionaryLoader(DictionaryPrevious dictionaryPrevious) {
+        this.dictionaryPrevious = dictionaryPrevious;
     }
 
     /**
@@ -29,7 +29,7 @@ public class CSVToDictionaryLoader {
             lines.forEach(line -> {
                 String[] words = line.split(",");
                 DictionaryEntry entry = this.getDictionaryEntry(words);
-                this.dictionary.addEntry(entry);
+                this.dictionaryPrevious.addEntry(entry);
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,7 +42,7 @@ public class CSVToDictionaryLoader {
             lines.forEach(line -> {
                 String[] words = line.split(",");
                 DictionaryEntry entry = this.getDictionaryEntry(words);
-                Map<String, List<DictionaryEntry>>  map = this.dictionary.getRealDictionary();
+                Map<String, List<DictionaryEntry>>  map = this.dictionaryPrevious.getRealDictionary();
                 String word = entry.getWord();
 
                 List<DictionaryEntry> entries = map.getOrDefault(word, new ArrayList<>());

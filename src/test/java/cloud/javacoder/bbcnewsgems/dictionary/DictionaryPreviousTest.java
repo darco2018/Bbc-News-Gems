@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @Slf4j
-@SpringBootTest(classes = {Dictionary.class})
-public class DictionaryTest {
+@SpringBootTest(classes = {DictionaryPrevious.class})
+public class DictionaryPreviousTest {
 
     private static DictionaryEntry entry_1 = new DictionaryEntry();
-    private Dictionary dictionary = new Dictionary();
+    private DictionaryPrevious dictionaryPrevious = new DictionaryPrevious();
 
 
     @BeforeAll
@@ -26,9 +26,9 @@ public class DictionaryTest {
     @Test
     public void whenAddEntry_thenOK() {
         log.info("About to add an entry: ");
-        dictionary.addEntry(entry_1);
+        dictionaryPrevious.addEntry(entry_1);
 
-        Assertions.assertThat(dictionary.getDictionaryByRank().size()).isEqualTo(1);
+        Assertions.assertThat(dictionaryPrevious.getDictionaryByRank().size()).isEqualTo(1);
     }
 
     @Test
@@ -44,23 +44,23 @@ public class DictionaryTest {
     @Test
     public void givenDictionaryContainsWord_returnsCorrectRank() {
 
-        dictionary.addEntry(entry_1);
+        dictionaryPrevious.addEntry(entry_1);
 
         DictionaryEntry entry_2 = new DictionaryEntry();
         entry_2.setRank(2);
         entry_2.setWord("be");
-        dictionary.addEntry(entry_2);
+        dictionaryPrevious.addEntry(entry_2);
 
-        Assertions.assertThat(this.dictionary.containsWord("the")).isEqualTo(1);
-        Assertions.assertThat(this.dictionary.containsWord("be")).isEqualTo(2);
+        Assertions.assertThat(this.dictionaryPrevious.containsWord("the")).isEqualTo(1);
+        Assertions.assertThat(this.dictionaryPrevious.containsWord("be")).isEqualTo(2);
     }
 
     @Test
     public void givenDictionaryDoesntContainWord_returnsNegative() {
 
-        dictionary.addEntry(entry_1);
+        dictionaryPrevious.addEntry(entry_1);
 
-        Assertions.assertThat(this.dictionary.containsWord("notindictionary")).isEqualTo(-1);
+        Assertions.assertThat(this.dictionaryPrevious.containsWord("notindictionary")).isEqualTo(-1);
     }
 
 }

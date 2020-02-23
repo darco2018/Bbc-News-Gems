@@ -10,23 +10,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-@SpringBootTest(classes = {Dictionary.class, DictionaryEntry.class, CSVToDictionaryLoader.class})
-public class CSVToDictionaryEntryConverterTest {
+@SpringBootTest(classes = {DictionaryPrevious.class, DictionaryEntry.class, CSVToDictionaryLoader.class})
+public class CSVToDictionaryPreviousEntryConverterTest {
 
     private static String pathToFile = "dictionary5000.csv";
     List<DictionaryEntry> dictionaryByRank;
     Map<String, DictionaryEntry> dictionaryByWord;
-    private Dictionary dictionary;
+    private DictionaryPrevious dictionaryPrevious;
     private CSVToDictionaryLoader converter;
 
     @BeforeEach
     public void setUp() throws IOException {
-        dictionary = new Dictionary();
-        converter = new CSVToDictionaryLoader(dictionary);
+        dictionaryPrevious = new DictionaryPrevious();
+        converter = new CSVToDictionaryLoader(dictionaryPrevious);
         converter.load(pathToFile);
 
-        dictionaryByRank = dictionary.getDictionaryByRank();
-        dictionaryByWord = dictionary.getDictionaryByWord();
+        dictionaryByRank = dictionaryPrevious.getDictionaryByRank();
+        dictionaryByWord = dictionaryPrevious.getDictionaryByWord();
     }
 
 
@@ -44,7 +44,7 @@ public class CSVToDictionaryEntryConverterTest {
     @Test
     void givenDictionaryEntries_sortsByWordAscending() {
         // act
-        List<DictionaryEntry> sortedByWord = this.dictionary.sortEntriesByWord(dictionaryByRank);
+        List<DictionaryEntry> sortedByWord = this.dictionaryPrevious.sortEntriesByWord(dictionaryByRank);
 
         // assert
         Assertions.assertThat(sortedByWord.size()).isEqualTo(5000);
@@ -57,10 +57,10 @@ public class CSVToDictionaryEntryConverterTest {
         Assertions.assertThat(sortedByWord).extracting(fiveOccurrencesOfNo).contains("no-a", "no-r", "no-u", "no-p", "no-d");
 
         //this.dictionary.printSortedByWordAsc();
-        Map<String, Integer> map = this.dictionary.getFrequencyMap();
+        Map<String, Integer> map = this.dictionaryPrevious.getFrequencyMap();
         System.out.println("Map is " + map.size()); // Words in dictionary without repetitions: 4352
 
-        Map<String, Integer> repeated = this.dictionary.getWordsWithFrequencyLargerThanOne();
+        Map<String, Integer> repeated = this.dictionaryPrevious.getWordsWithFrequencyLargerThanOne();
         for (String word : repeated.keySet()) {
             int freq = repeated.get(word);
             System.out.printf("%d.%s\n", freq, word);

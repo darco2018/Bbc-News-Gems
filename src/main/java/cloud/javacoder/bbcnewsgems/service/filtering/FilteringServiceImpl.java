@@ -1,6 +1,6 @@
 package cloud.javacoder.bbcnewsgems.service.filtering;
 
-import cloud.javacoder.bbcnewsgems.dictionary.Dictionary;
+import cloud.javacoder.bbcnewsgems.dictionary.DictionaryPrevious;
 import cloud.javacoder.bbcnewsgems.headlines.FilteredHeadline;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,10 +13,10 @@ import java.util.List;
 @Service
 public class FilteringServiceImpl implements FilteringService {
 
-    private final Dictionary dictionary;
+    private final DictionaryPrevious dictionaryPrevious;
 
-    public FilteringServiceImpl(Dictionary dictionary) {
-        this.dictionary = dictionary;
+    public FilteringServiceImpl(DictionaryPrevious dictionaryPrevious) {
+        this.dictionaryPrevious = dictionaryPrevious;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class FilteringServiceImpl implements FilteringService {
         for (int i = 0; i < words.length; i++) {
             log.info("Testing word: " + words[i]);
 
-            if (dictionary.containsWord(words[i]) < 0) {
+            if (dictionaryPrevious.containsWord(words[i]) < 0) {
                 log.info("This word(index) is NOT in range: " + i);
                 outOfRange.add(i);
             } else {

@@ -1,7 +1,6 @@
 package cloud.javacoder.bbcnewsgems.dictionary;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,15 +8,32 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class NewCSVLoaderTest {
+public class CSVParserTest {
 
-    private CSVToDictionaryLoader loader;
     private String csvFile = "dictionary5000.csv";
     private Dictionary dict;
 
     @BeforeEach
     public void setUp() {
-        dict = new Dictionary();
+    }
+
+    @Test
+    public void given5000linesOfWordData_parsesThemInto5000DictionaryEntries() throws IOException {
+        // act
+        List<DictionaryEntry> entries = CSVParser.parse(csvFile);
+
+        // assert
+        Assertions.assertThat(entries.size()).isEqualTo(5000);
+    }
+
+/*
+    private CSVToDictionaryLoader loader;
+    private String csvFile = "dictionary5000.csv";
+    private DictionaryPrevious dict;
+
+    @BeforeEach
+    public void setUp() {
+        dict = new DictionaryPrevious();
         loader = new CSVToDictionaryLoader(dict);
     }
 
@@ -55,5 +71,5 @@ public class NewCSVLoaderTest {
         // assert
         Assertions.assertThat(wordsWithMultipleEntries).isEqualTo(604);
         Assertions.assertThat(wordsWithSingleEntry).isEqualTo(4352 - 604);
-    }
+    }*/
 }

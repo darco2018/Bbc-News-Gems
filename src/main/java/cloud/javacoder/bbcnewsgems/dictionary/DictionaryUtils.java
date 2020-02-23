@@ -2,15 +2,13 @@ package cloud.javacoder.bbcnewsgems.dictionary;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
-
 @Slf4j
 public class DictionaryUtils {
 
-    private Dictionary dictionary;
+    private DictionaryPrevious dictionaryPrevious;
 
-    public DictionaryUtils(Dictionary dictionary) {
-        this.dictionary = dictionary;
+    public DictionaryUtils(DictionaryPrevious dictionaryPrevious) {
+        this.dictionaryPrevious = dictionaryPrevious;
     }
 
 

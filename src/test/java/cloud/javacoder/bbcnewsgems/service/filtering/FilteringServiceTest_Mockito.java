@@ -1,6 +1,6 @@
 package cloud.javacoder.bbcnewsgems.service.filtering;
 
-import cloud.javacoder.bbcnewsgems.dictionary.Dictionary;
+import cloud.javacoder.bbcnewsgems.dictionary.DictionaryPrevious;
 import cloud.javacoder.bbcnewsgems.headlines.FilteredHeadline;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,12 +20,12 @@ public class FilteringServiceTest_Mockito {
 
     private List<String> headlines;
     @Mock
-    private Dictionary dictionary;
+    private DictionaryPrevious dictionaryPrevious;
     private FilteringService filteringService;
 
     @BeforeEach
     public void init() {
-        filteringService = new FilteringServiceImpl(this.dictionary);
+        filteringService = new FilteringServiceImpl(this.dictionaryPrevious);
         this.headlines = new ArrayList<String>();
         this.headlines.add("aaa bbb ccc");
         this.headlines.add("ddd eee fff ggg");
@@ -33,7 +33,7 @@ public class FilteringServiceTest_Mockito {
 
         int notInRange = -1;
         doReturn(1, 100, notInRange, 99, notInRange, notInRange, 4, 1000)
-                .when(this.dictionary).containsWord(anyString());
+                .when(this.dictionaryPrevious).containsWord(anyString());
     }
 
     @Test
